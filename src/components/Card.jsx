@@ -1,33 +1,31 @@
 import moment from 'moment';
 
 const Card = ({ weatherData, backgroundPhoto }) => {
-
   if (!weatherData || !weatherData.main || !weatherData.weather) {
     return null;
   }
 
-
   const { name, main, weather } = weatherData;
 
-  const temperature = main.temp;
+  const currentTemp = main.temp;
 
   const backgroundGradient = () => {
-    if (temperature < -10) {
+    if (currentTemp < -10) {
       return 'linear-gradient(to right, #004ff9, #000000)';
     }
-    if (temperature < 0) {
+    if (currentTemp < 0) {
       return 'linear-gradient(to right, #62cff4, #2c67f2)';
     }
-    if (temperature < 10) {
+    if (currentTemp < 10) {
       return 'linear-gradient(to right, #abdcff, #0396ff)';
     }
-    if (temperature < 20) {
+    if (currentTemp < 20) {
       return 'linear-gradient(to right, #f1a7f1, #fad0c4)';
     }
-    if (temperature < 30) {
+    if (currentTemp < 30) {
       return 'linear-gradient(to right, #c5f9d7, #f7d486, #f27a7d)';
     }
-    if (temperature < 40) {
+    if (currentTemp < 40) {
       return 'linear-gradient(to right, #fe5f75, #fc9840)';
     }
     return 'linear-gradient(to right, #ffffff, #d4dfed)';
@@ -37,14 +35,14 @@ const Card = ({ weatherData, backgroundPhoto }) => {
     <div
       className="card"
       style={{
-        backgroundImage: `${backgroundGradient()}, url(${backgroundPhoto})`,
+        backgroundImage: `url(${backgroundPhoto}), ${backgroundGradient()}`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundBlendMode: 'overlay'
       }}
     >
       <div className="weather-main">
-        <p className="weather-temp">{temperature.toFixed(0)}°</p>
+        <p className="weather-temp">{currentTemp.toFixed(0)}°</p>
         <p className="weather-city">{name.toUpperCase()}</p>
       </div>
       <div className="weather-info">
@@ -59,7 +57,7 @@ const Card = ({ weatherData, backgroundPhoto }) => {
           </div>
           <img
             src={`https://openweathermap.org/img/wn/${weather[0].icon}.png`}
-            alt="icon"
+            alt=""
           />
         </div>
       </div>
