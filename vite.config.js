@@ -14,5 +14,6 @@ export default defineConfig(({ mode }) => {
       'process.env': env
     },
     plugins: [react()],
+    base: "/Weather-react-app"
   };
 });

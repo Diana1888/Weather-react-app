@@ -8,7 +8,7 @@ const Weather = () => {
   const [long, setLong] = useState('');
   const [data, setData] = useState({});
   const [backgroundPhoto, setBackgroundPhoto] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -19,7 +19,7 @@ const Weather = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+
       if (lat && long) {
         try {
           const response = await fetch(
