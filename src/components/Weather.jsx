@@ -7,7 +7,7 @@ const Weather = () => {
   const [coords, setCoords] = useState({ lat: '', long: '' });
   const [data, setData] = useState({});
   const [backgroundPhoto, setBackgroundPhoto] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -20,7 +20,6 @@ const Weather = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-
       if (coords.lat && coords.long) {
         try {
           const response = await fetch(
@@ -33,7 +32,7 @@ const Weather = () => {
         } catch (error) {
           console.log(error);
         } finally {
-          setLoading(false);
+          setIsLoading(false);
         }
       }
     };
@@ -42,11 +41,8 @@ const Weather = () => {
 
   return (
     <div className="container">
-      {loading ? (
-        <img className="loader" src={cloudsGif} alt="Loading" />
-      ) : data.notFound ? (
-        <div>Not found</div>
-      ) : (
+      {isLoading && <img className="loader" src={cloudsGif} alt="Loading" />}
+      {data && (
         <>
           <Card weatherData={data} backgroundPhoto={backgroundPhoto} />
           <Background
@@ -55,6 +51,7 @@ const Weather = () => {
           />
         </>
       )}
+      {!data && <div>Not found</div>}
     </div>
   );
 };

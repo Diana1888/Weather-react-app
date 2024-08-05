@@ -1,4 +1,5 @@
-import moment from 'moment';
+
+import dayjs from 'dayjs';
 
 const Card = ({ weatherData, backgroundPhoto }) => {
   if (!weatherData || !weatherData.main || !weatherData.weather) {
@@ -46,7 +47,7 @@ const Card = ({ weatherData, backgroundPhoto }) => {
         <p className="weather-city">{name.toUpperCase()}</p>
       </div>
       <div className="weather-info">
-        <p className="weather-date">{moment().format('LL')}</p>
+        <p className="weather-date">{dayjs().format('dddd, DD MMM')}</p>
         <div className="weather-sub-info">
           <div className="weather-condition">
             <p className="weather-desc">{weather[0].description}</p>
