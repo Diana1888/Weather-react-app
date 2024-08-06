@@ -1,5 +1,4 @@
 import Card from './Card';
-import Background from './Background';
 import cloudsGif from '../assets/cloudsGif.gif';
 import { useState, useEffect } from 'react';
 
@@ -39,16 +38,39 @@ const Weather = () => {
     fetchData();
   }, [coords]);
 
+  useEffect(() => {
+    async function searchApi(query) {
+      try {
+        const response = await fetch(
+          `https://api.unsplash.com/search/photos/?query=${query}&client_id=${process.env.REACT_APP_UNSPLASH_KEY}`
+        );
+        const data = await response.json();
+        if (data.results.length > 0) {
+          const randomPhoto =
+            data.results[Math.floor(Math.random() * data.results.length)];
+          if (randomPhoto && randomPhoto.urls) {
+            setBackgroundPhoto(randomPhoto.urls.regular);
+          } else {
+            console.error('No photo URLs found.');
+          }
+        } else {
+          searchApi('town');
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+    if (data.name) {
+      searchApi(data.name);
+    }
+  }, [data]);
+
   return (
     <div className="container">
       {isLoading && <img className="loader" src={cloudsGif} alt="Loading" />}
       {data && (
         <>
           <Card weatherData={data} backgroundPhoto={backgroundPhoto} />
-          <Background
-            weatherData={data}
-            setBackgroundPhoto={setBackgroundPhoto}
-          />
         </>
       )}
       {!data && <div>Not found</div>}

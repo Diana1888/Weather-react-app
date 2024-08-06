@@ -1,4 +1,3 @@
-
 import dayjs from 'dayjs';
 
 const Card = ({ weatherData, backgroundPhoto }) => {
