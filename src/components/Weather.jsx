@@ -1,5 +1,6 @@
 import Card from './Card';
 import cloudsGif from '../assets/cloudsGif.gif';
+import house from '../assets/house.jpg';
 import { useState, useEffect } from 'react';
 
 const Weather = () => {
@@ -51,10 +52,10 @@ const Weather = () => {
           if (randomPhoto && randomPhoto.urls) {
             setBackgroundPhoto(randomPhoto.urls.regular);
           } else {
-            console.error('No photo URLs found.');
+            searchApi('town');
           }
         } else {
-          searchApi('town');
+          setBackgroundPhoto(house);
         }
       } catch (err) {
         console.error(err);
