@@ -1,6 +1,5 @@
 import Card from './Card';
 import cloudsGif from '../assets/cloudsGif.gif';
-import house from '../assets/house.jpg';
 import { useState, useEffect } from 'react';
 
 const Weather = () => {
@@ -45,17 +44,15 @@ const Weather = () => {
         const response = await fetch(
           `https://api.unsplash.com/search/photos/?query=${query}&client_id=${process.env.REACT_APP_UNSPLASH_KEY}`
         );
-        const data = await response.json();
-        if (data.results.length > 0) {
+        const photoData = await response.json();
+        if (photoData.results.length > 0) {
           const randomPhoto =
-            data.results[Math.floor(Math.random() * data.results.length)];
+            photoData.results[Math.floor(Math.random() * photoData.results.length)];
           if (randomPhoto && randomPhoto.urls) {
             setBackgroundPhoto(randomPhoto.urls.regular);
-          } else {
-            searchApi('town');
-          }
+          } 
         } else {
-          setBackgroundPhoto(house);
+          searchApi('town')
         }
       } catch (err) {
         console.error(err);
@@ -64,7 +61,7 @@ const Weather = () => {
     if (data.name) {
       searchApi(data.name);
     }
-  }, [data]);
+  }, [data.name]);
 
   return (
     <div className="container">
